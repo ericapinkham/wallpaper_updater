@@ -1,0 +1,9 @@
+[Unit]
+Description=Wallpaper Updater
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/wallpaper_updater.py
+
+[Install]
+WantedBy=multi-user.target
