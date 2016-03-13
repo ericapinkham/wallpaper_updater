@@ -1,8 +1,8 @@
+#!/usr/local/bin/python3.5
 import praw
 import urllib
 import os
 from apscheduler.schedulers.background import BackgroundScheduler
-import random
 import time
 import sched
 
@@ -25,7 +25,7 @@ def change_background():
         #get image
         fname = url.split('/')[-1]
         if '.jpg' in fname:
-            urllib.request.urlretrieve(url,os.path.expanduser('~')+'.wallpaper_updater/wallpaper_updater.jpg')
+            urllib.request.urlretrieve(url,os.path.expanduser('~')+'/.wallpaper_updater/wallpaper_updater.jpg')
             break
         elif 'imgur' in url:
             # imgur links look like this 
@@ -33,14 +33,16 @@ def change_background():
             # the photos look like this
             # http://i.imgur.com/77PaCzo.jpg
             url = 'http://i.imgur.com/'+fname +'.jpg'
-            urllib.request.urlretrieve(url,os.path.expanduser('~')+'.wallpaper_updater/wallpaper_updater.jpg')
+            urllib.request.urlretrieve(url,os.path.expanduser('~')+'/.wallpaper_updater/wallpaper_updater.jpg')
             break
+        
 def ensure_dir(f):
     d = os.path.dirname(f)
     if not os.path.exists(d):
         os.makedirs(d)
         
 if __name__ == '__main__':
+    ensure_dir(os.path.expanduser('~')+'/.wallpaper_updater/')
     s = sched.scheduler(time.time, time.sleep)
     s.enter(1, 1, update_background, (s,))
     s.run()
